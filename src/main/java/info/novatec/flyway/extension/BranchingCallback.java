@@ -5,7 +5,6 @@ import info.novatec.flyway.extension.release.ReleaseTableImpl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Types;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -15,11 +14,8 @@ import org.flywaydb.core.api.MigrationInfo;
 import org.flywaydb.core.api.MigrationInfoService;
 import org.flywaydb.core.api.callback.FlywayCallback;
 import org.flywaydb.core.internal.dbsupport.DbSupport;
-import org.flywaydb.core.internal.dbsupport.JdbcTemplate;
+import org.flywaydb.core.internal.dbsupport.DbSupportFactory;
 import org.flywaydb.core.internal.dbsupport.Schema;
-import org.flywaydb.core.internal.dbsupport.Table;
-import org.flywaydb.core.internal.dbsupport.h2.H2DbSupport;
-import org.flywaydb.core.internal.dbsupport.h2.H2Table;
 import org.flywaydb.core.internal.util.jdbc.TransactionCallback;
 import org.flywaydb.core.internal.util.jdbc.TransactionTemplate;
 import org.flywaydb.core.internal.util.logging.Log;
@@ -175,17 +171,13 @@ public class BranchingCallback implements FlywayCallback {
      * @return the initialized {@link ReleaseTable} instance
      */
     private ReleaseTable initReleaseTable(final Connection connection) {
-        final DbSupport dbSupport = new H2DbSupport(connection);
+        final DbSupport dbSupport = DbSupportFactory.createDbSupport(connection, false);
         final Schema currentSchema = dbSupport.getCurrentSchema();
 
         return new TransactionTemplate(connection)
                 .execute(new TransactionCallback<ReleaseTable>() {
                     public ReleaseTable doInTransaction() {
-                        JdbcTemplate jdbcTemplate = new JdbcTemplate(
-                                connection, Types.VARCHAR);
-                        Table table = new H2Table(jdbcTemplate, dbSupport,
-                                currentSchema, "releasetable");
-                        return new ReleaseTableImpl(dbSupport, table, "main",
+                        return new ReleaseTableImpl(dbSupport, currentSchema.getTable("releasetable"), "main",
                                 this.getClass().getClassLoader());
                     }
                 });
