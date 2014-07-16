@@ -66,22 +66,24 @@ public class ReleaseTableImpl implements ReleaseTable {
     /**
      * Creates a new instance of the release table support.
      *
-     * @param dbSupport
+     * @param dbSupportToUse
      *            Database-specific functionality.
-     * @param table
+     * @param tableToUse
      *            The release table used by flyway.
-     * @param defaultRelease
+     * @param defaultReleaseToUse
      *            Default release
-     * @param classLoader
+     * @param classLoaderToUse
      *            The ClassLoader for loading migrations on the classpath.
      */
-    public ReleaseTableImpl(final DbSupport dbSupport, final Table table,
-            final String defaultRelease, final ClassLoader classLoader) {
-        this.jdbcTemplate = dbSupport.getJdbcTemplate();
-        this.dbSupport = dbSupport;
-        this.table = table;
-        this.defaultRelease = defaultRelease;
-        this.classLoader = classLoader;
+    public ReleaseTableImpl(final DbSupport dbSupportToUse, 
+            final Table tableToUse,
+            final String defaultReleaseToUse, 
+            final ClassLoader classLoaderToUse) {
+        this.jdbcTemplate = dbSupportToUse.getJdbcTemplate();
+        this.dbSupport = dbSupportToUse;
+        this.table = tableToUse;
+        this.defaultRelease = defaultReleaseToUse;
+        this.classLoader = classLoaderToUse;
 
         createIfNotExists();
     }

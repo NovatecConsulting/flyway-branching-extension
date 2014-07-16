@@ -186,14 +186,16 @@ public class BranchingCallback implements FlywayCallback {
      * @return the initialized {@link ReleaseTable} instance
      */
     private ReleaseTable initReleaseTable(final Connection connection) {
-        final DbSupport dbSupport = DbSupportFactory.createDbSupport(connection, false);
+        final DbSupport dbSupport = DbSupportFactory.createDbSupport(
+             connection, false);
         final Schema currentSchema = dbSupport.getCurrentSchema();
 
         return new TransactionTemplate(connection)
                 .execute(new TransactionCallback<ReleaseTable>() {
                     public ReleaseTable doInTransaction() {
-                        return new ReleaseTableImpl(dbSupport, currentSchema.getTable("releasetable"), "main",
-                                this.getClass().getClassLoader());
+                        return new ReleaseTableImpl(dbSupport, 
+                             currentSchema.getTable("releasetable"), "main",
+                             this.getClass().getClassLoader());
                     }
                 });
     }
