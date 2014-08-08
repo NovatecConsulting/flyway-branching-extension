@@ -1,0 +1,1 @@
+UPDATE releasetable SET "CURRENT_RELEASE"='v11';

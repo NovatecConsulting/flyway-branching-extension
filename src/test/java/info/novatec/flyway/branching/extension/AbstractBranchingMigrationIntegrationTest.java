@@ -17,23 +17,20 @@ package info.novatec.flyway.branching.extension;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import info.novatec.flyway.branching.extension.BranchingCallback;
 
-import java.io.File;
+import javax.sql.DataSource;
 
-import org.apache.commons.io.FileUtils;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.MigrationInfoService;
-import org.junit.After;
 import org.junit.Test;
 
 /**
  * Integration test to verify the branching support for flywaydb migrations.
  */
-public class BranchingMigrationIntegrationTest {
+public abstract class AbstractBranchingMigrationIntegrationTest {
+    protected static final long SLEEP_TIME = 1000L;
+
     private static final int EXPECTED_MIGRATIONS = 3;
-    private static final long SLEEP_TIME = 1000L;
-    private String databasePath;
 
     /**
      * Verifies that db migrations for branches is working.
@@ -44,10 +41,9 @@ public class BranchingMigrationIntegrationTest {
         Flyway cut = new Flyway();
 
         // Point it to the database
-        databasePath = "dbmigration" + System.nanoTime();
-        cut.setDataSource("jdbc:h2:file:./target/" + databasePath, "sa", null);
+        cut.setDataSource(getJdbcUrl(), getUserName(), getPassword());
 
-        cut.setLocations("db/branching/migrations");
+        cut.setLocations(getLocations());
         cut.setCallbacks(new BranchingCallback(cut));
         cut.setValidateOnMigrate(false);
         cut.setInitOnMigrate(true);
@@ -69,18 +65,15 @@ public class BranchingMigrationIntegrationTest {
         assertThat("No more pending migrations should be avilable",
                 migrationInfoService.pending().length, is(0));
     }
-
-    /**
-     * Cleaning up the test database.
-     * @throws InterruptedException if thread is interrupted
-     */
-    @After
-    public final void cleanup() throws InterruptedException {
-        Thread.sleep(SLEEP_TIME);
-        File file = new File("./target/" + databasePath);
-        if (file.exists()) {
-            FileUtils.deleteQuietly(file);
-        }
-    }
+    
+    protected abstract String getJdbcUrl();
+    
+    protected abstract String getUserName();
+    
+    protected abstract String getPassword();
+    
+    protected abstract String[] getLocations();
+    
+    protected abstract DataSource getDatasource();
 
 }
