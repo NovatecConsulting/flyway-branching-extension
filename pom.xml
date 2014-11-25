@@ -8,16 +8,16 @@
 	<description>Flyway Extension for adding branching support</description>
 	<url>https://github.com/NovaTecConsulting/flyway-branching-extension/</url>
 	<scm>
-        <url>https://github.com/NovaTecConsulting/flyway-branching-extension.git</url>
-    </scm>
+		<url>https://github.com/NovaTecConsulting/flyway-branching-extension.git</url>
+	</scm>
 	<packaging>jar</packaging>
-	
+
 	<properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <flyway.version>3.0</flyway.version>
-    </properties>
-    
-    <dependencies>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<flyway.version>3.0</flyway.version>
+	</properties>
+
+	<dependencies>
 		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
@@ -46,11 +46,11 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-		    <groupId>org.postgresql</groupId>
-		    <artifactId>postgresql</artifactId>
-		    <version>9.3-1102-jdbc41</version>
-		    <scope>test</scope>
-		</dependency>		
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.3-1102-jdbc41</version>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.hamcrest</groupId>
 			<artifactId>hamcrest-all</artifactId>
@@ -64,23 +64,17 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-jdbc</artifactId>
-		    <version>4.0.6.RELEASE</version>
-		    <scope>test</scope>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>4.0.6.RELEASE</version>
+			<scope>test</scope>
 		</dependency>
-		
+
 	</dependencies>
-	
+
 	<build>
-		<!-- <resources>
-			<resource>
-				<directory>src/main/java</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</resource>
-		</resources> -->
+		<!-- <resources> <resource> <directory>src/main/java</directory> <excludes> 
+			<exclude>**/*.java</exclude> </excludes> </resource> </resources> -->
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -88,6 +82,14 @@
 				<configuration>
 					<source>1.6</source>
 					<target>1.7</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.7.2.201409121644</version>
+				<configuration>
+					<append>true</append>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -172,52 +174,52 @@
 				</executions>
 			</plugin>
 			<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.2.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.9.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>			
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9.1</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
-	
-    <licenses>
-        <license>
-            <name>The Apache Software License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>manual</distribution>
-        </license>
-    </licenses>
-    <distributionManagement>
-        <repository>
-            <id>nt-repo</id>
-            <name>Novatec Repository></name>
-            <url>http://repository.novatec-gmbh.de/content/repositories/novatec/</url>
-        </repository>
-        <snapshotRepository>
-            <id>nt-repo</id>
-            <name>Novatec Repository></name>
-            <url>http://repository.novatec-gmbh.de/content/repositories/novatec-snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
-	
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>manual</distribution>
+		</license>
+	</licenses>
+	<distributionManagement>
+		<repository>
+			<id>nt-repo</id>
+			<name>Novatec Repository></name>
+			<url>http://repository.novatec-gmbh.de/content/repositories/novatec/</url>
+		</repository>
+		<snapshotRepository>
+			<id>nt-repo</id>
+			<name>Novatec Repository></name>
+			<url>http://repository.novatec-gmbh.de/content/repositories/novatec-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 </project>

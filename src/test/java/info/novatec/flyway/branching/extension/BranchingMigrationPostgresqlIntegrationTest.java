@@ -18,6 +18,7 @@ package info.novatec.flyway.branching.extension;
 import javax.sql.DataSource;
 
 import org.junit.After;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
@@ -33,12 +34,12 @@ public class BranchingMigrationPostgresqlIntegrationTest extends AbstractBranchi
     
     @Override
     protected String getUserName() {
-    	return "postgres";
+    	return "dbmigration";
     }
     
     @Override
     protected String getPassword() {
-    	return "postgres";
+    	return "dbmigration";
     }
     
     @Override
@@ -57,12 +58,24 @@ public class BranchingMigrationPostgresqlIntegrationTest extends AbstractBranchi
      * Cleaning up the test database.
      * @throws InterruptedException if thread is interrupted
      */
-    @After
-    public final void cleanup() throws InterruptedException {
-    	JdbcTemplate jdbcTemplate = new JdbcTemplate(getDatasource());
-    	jdbcTemplate.update("DROP SCHEMA public CASCADE");
-    	jdbcTemplate.update("CREATE SCHEMA public AUTHORIZATION postgres");
-    	jdbcTemplate.update("GRANT ALL ON SCHEMA public TO postgres");
-    }
+	@After
+	public final void cleanup() throws InterruptedException {
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(getDatasource());
+		try {
+			jdbcTemplate.update("drop table person");
+		} catch (DataAccessException e) {
+			// No OP
+		}
+		try {
+			jdbcTemplate.update("drop table releasetable");
+		} catch (DataAccessException e) {
+			// No OP
+		}
+		try {
+			jdbcTemplate.update("drop table schema_version");
+		} catch (DataAccessException e) {
+			// No OP
+		}
+	}
 
 }
