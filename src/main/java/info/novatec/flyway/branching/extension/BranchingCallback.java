@@ -69,16 +69,14 @@ public class BranchingCallback implements FlywayCallback {
         super();
         this.flyway = flywayInstance;
 
-        if (this.releaseTable == null) {
-            try {
-                this.releaseTable = initReleaseTable(
-                        flywayInstance.getDataSource().getConnection());
-            } catch (SQLException e) {
-                throw new FlywayException(
-                        "Error getting database connection for initializing "
-                        + "release table. Reason: "
-                                + ExceptionUtils.getRootCauseMessage(e));
-            }
+        try {
+            this.releaseTable = initReleaseTable(
+                    flywayInstance.getDataSource().getConnection());
+        } catch (SQLException e) {
+            throw new FlywayException(
+                    "Error getting database connection for "
+                    + "initializing release table. Reason: "
+                    + ExceptionUtils.getRootCauseMessage(e));
         }
 
         try {
@@ -203,7 +201,7 @@ public class BranchingCallback implements FlywayCallback {
         return new TransactionTemplate(connection)
                 .execute(new TransactionCallback<ReleaseTable>() {
                     public ReleaseTable doInTransaction() {
-                        return new ReleaseTableImpl(dbSupport, 
+                    return new ReleaseTableImpl(dbSupport,
                              currentSchema.getTable("releasetable"), "main",
                              this.getClass().getClassLoader());
                     }

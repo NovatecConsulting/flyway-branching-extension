@@ -75,10 +75,9 @@ public class ReleaseTableImpl implements ReleaseTable {
      * @param classLoaderToUse
      *            The ClassLoader for loading migrations on the classpath.
      */
-    public ReleaseTableImpl(final DbSupport dbSupportToUse, 
-            final Table tableToUse,
-            final String defaultReleaseToUse, 
-            final ClassLoader classLoaderToUse) {
+    public ReleaseTableImpl(final DbSupport dbSupportToUse,
+        final Table tableToUse, final String defaultReleaseToUse,
+        final ClassLoader classLoaderToUse) {
         this.jdbcTemplate = dbSupportToUse.getJdbcTemplate();
         this.dbSupport = dbSupportToUse;
         this.table = tableToUse;
