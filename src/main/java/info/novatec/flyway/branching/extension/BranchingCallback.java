@@ -151,12 +151,12 @@ public class BranchingCallback implements FlywayCallback {
     }
 
     @Override
-    public void beforeBaseline ( Connection connection ) {
+    public final void beforeBaseline(final Connection connection) {
         LOG.debug("beforeBaseline()");
     }
 
     @Override
-    public void afterBaseline ( Connection connection ) {
+    public final void afterBaseline(final Connection connection) {
         LOG.debug("afterBaseline()");
     }
 
