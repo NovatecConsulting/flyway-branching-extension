@@ -14,7 +14,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<flyway.version>3.0</flyway.version>
+		<flyway.version>3.1</flyway.version>
 	</properties>
 
 	<dependencies>
@@ -134,7 +134,6 @@
 							<consoleOutput>true</consoleOutput>
 							<failsOnError>false</failsOnError>
 							<failOnViolation>false</failOnViolation>
-							<linkXRef>false</linkXRef>
 						</configuration>
 						<goals>
 							<goal>check</goal>

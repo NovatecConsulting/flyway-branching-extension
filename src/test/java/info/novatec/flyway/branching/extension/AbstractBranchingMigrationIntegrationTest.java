@@ -46,8 +46,8 @@ public abstract class AbstractBranchingMigrationIntegrationTest {
         cut.setLocations(getLocations());
         cut.setCallbacks(new BranchingCallback(cut));
         cut.setValidateOnMigrate(false);
-        cut.setInitOnMigrate(true);
-        cut.setInitVersion("0");
+        cut.setBaselineOnMigrate ( true );
+        cut.setBaselineVersion("0");
 
         // Start the migration
         int migrations = cut.migrate();
